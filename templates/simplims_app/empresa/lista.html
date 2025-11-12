@@ -1,0 +1,48 @@
+<!-- templates/simplims_app/empresa/lista.html -->
+{% extends "base.html" %}
+{% block content %}
+    <h1>
+        Empresas
+        <a type="button"
+           class="btn btn-primary"
+           href="{% url 'empresa_criar' %}"
+           class="btn btn-primary">Incluir</a>
+    </h1>
+    {% if object_list %}
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Tipo Empresa</th>
+                    <th>Apelido</th>
+                    <th>Responsável</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Razão Social</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in object_list %}
+                    <tr>
+                        <td>{{ item.pk }}</td>
+                        <td>{{ item.get_tipo_empresa_display }}</td>
+                        <td>{{ item.apelido }}</td>
+                        <td>{{ item.responsavel_tecnico }}</td>
+                        <td>{{ item.telefone }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.razao_social }}</td>
+                        <td>
+                            <a href="{% url 'empresa_editar' item.pk %}"
+                               class="btn btn-sm btn-warning">Editar</a>
+                            <a href="{% url 'empresa_excluir' item.pk %}"
+                               class="btn btn-sm btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">Nenhuma empresa cadastrada.</div>
+    {% endif %}
+{% endblock %}

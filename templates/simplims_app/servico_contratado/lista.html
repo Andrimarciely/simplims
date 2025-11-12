@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lista de Serviços Contratados</h1>
+
+<a href="{% url 'servico_contratado_criar' %}" class="btn btn-primary mb-3">
+    Novo Serviço Contratado
+</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ordem de Serviço</th>
+            <th>Serviço</th>
+            <th>Quantidade de Amostras</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in object_list %}
+            <tr>
+                <td>{{ item.pk }}</td>
+                <td>{{ item.ordem_servico }}</td>
+                <td>{{ item.servico.descricao }}</td>
+                <td>{{ item.quantidade_amostras }}</td>
+                <td>
+                    <a href="{% url 'servico_contratado_editar' item.pk %}" class="btn btn-sm btn-warning">
+                        Editar
+                    </a>
+                    <a href="{% url 'servico_contratado_excluir' item.pk %}" class="btn btn-sm btn-danger">
+                        Excluir
+                    </a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">
+                    Nenhum serviço contratado cadastrado.
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

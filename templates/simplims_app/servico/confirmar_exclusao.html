@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Excluir Serviço</h1>
+    <p>
+        Tem certeza que deseja excluir o serviço "<strong>{{ object.descricao }}</strong>"?
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        <a href="{% url 'servico_listar' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}

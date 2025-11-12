@@ -1,0 +1,18 @@
+<!-- templates/consultoria/amostra/formulario.html -->
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1>
+        {% if form.instance.pk %}
+            Amostra #{{ form.instance.pk }}
+        {% else %}
+            Nova Amostra
+        {% endif %}
+    </h1>
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="{% url 'amostra_listar' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Excluir Ordem de Serviço</h1>
+    <p>
+        Tem certeza que deseja excluir a ordem de serviço "<strong> OS {{ object.id }} - {{ object.empresa }} - {{ object.data_emissao }}</strong>"?
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        <a href="{% url 'ordem_servico_listar' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}

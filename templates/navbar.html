@@ -1,0 +1,67 @@
+<!-- navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">SIMPLIMS</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- Ordem de Serviço -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ordem_servico_listar' %}">Ordem de Serviço</a>
+                </li>
+                <!-- Serviços Contratados -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'servico_contratado_listar' %}">Serviços Contratados</a>
+                </li>
+                <!-- Amostra -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'amostra_listar' %}">Amostra</a>
+                </li>
+                <!-- Agenda -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'visita_tecnica_listar' %}">Agenda</a>
+                </li>
+                <!-- Configuração com submenu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       id="configDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">Configuração</a>
+                    <ul class="dropdown-menu" aria-labelledby="configDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'empresa_listar' %}">Empresa</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'matriz_listar' %}">Matriz</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'tipo_parametro_listar' %}">Tipo de Parâmetro</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'categoria_parametro_listar' %}">Categoria de Parâmetro</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'parametro_listar' %}">Parâmetro</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'servico_listar' %}">Serviço</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'legislacao_listar' %}">Legislação</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-3">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'visita_tecnica_listar' %}active{% endif %}"
+                   href="{% url 'visita_tecnica_listar' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if 'agenda' in request.resolver_match.url_name %}active{% endif %}"
+                   href="{% url 'visita_tecnica_agenda' %}">Agenda</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-3">
+            {% block tab_content %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

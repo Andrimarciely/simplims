@@ -1,0 +1,44 @@
+<!-- templates/simplims_app/ordem_servico/lista.html -->
+{% extends "base.html" %}
+{% block content %}
+    <h1>Lista de Ordens de Serviços</h1>
+    <a href="{% url 'ordem_servico_criar' %}" class="btn btn-primary">Nova Ordem de Serviço</a>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Empresa</th>
+                <th>Serviços</th>
+                <th>Observações</th>
+                <th>Data de Emissão</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+                <tr>
+                    <td>{{ item.pk }}</td>
+                    <td>{{ item.empresa }}</td>
+                    <td>
+                        {% for servico in item.servicos.all %}<span class="badge text-bg-secondary">{{ servico.descricao }}</span>{% endfor %}
+                    </td>
+                    <td>{{ item.observacoes|default:"- - -" }}</td>
+                    <td>{{ item.data_emissao|date:"d/m/Y" }}</td>
+                    <td>
+                        <a href="{% url 'ordem_servico_resultados' item.pk %}"
+                           class="btn btn-sm btn-info">Resultados</a>
+                        &nbsp;
+                        <a href="{% url 'ordem_servico_editar' item.pk %}"
+                           class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'ordem_servico_excluir' item.pk %}"
+                           class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">Nenhuma ordem de serviço cadastrada.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

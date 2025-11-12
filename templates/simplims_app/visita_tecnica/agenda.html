@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Visitas Técnicas</h1>
+            <a href="{% url 'visita_tecnica_criar' %}" class="btn btn-primary">+ Nova Visita Técnica</a>
+        </div>
+        <!-- Abas de navegação -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'visita_tecnica_listar' %}">Listar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'visita_tecnica_agenda' %}">Agenda</a>
+            </li>
+        </ul>
+        <!-- Cabeçalho da Agenda -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body text-center">
+                <h5>{{ data|date:"l" }}</h5>
+                <!-- Nome do dia da semana -->
+                <h1>{{ data|date:"d" }}</h1>
+                <!-- Número do dia -->
+                <h6>{{ data|date:"d/m/Y" }}</h6>
+                <!-- Data completa -->
+                <div class="d-flex justify-content-between mt-3">
+                    <a href="{% url 'visita_tecnica_agenda_dia' anterior.year anterior.month anterior.day %}"
+                       class="btn btn-outline-secondary">← Dia Anterior</a>
+                    <a href="{% url 'visita_tecnica_agenda' %}"
+                       class="btn btn-outline-primary">Hoje</a>
+                    <a href="{% url 'visita_tecnica_agenda_dia' proximo.year proximo.month proximo.day %}"
+                       class="btn btn-outline-secondary">Próximo Dia →</a>
+                </div>
+            </div>
+        </div>
+        <!-- Tabela de visitas -->
+        {% if visitas %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Local</th>
+                        <th>Responsável</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in visitas %}
+                        <tr>
+                            <td>{{ item.hora_visita|default:"--" }}</td>
+                            <td>{{ item.local }}</td>
+                            <td>{{ item.responsavel }}</td>
+                            <td>{{ item.get_status_display }}</td>
+                            <td>
+                                <a href="{% url 'visita_tecnica_editar' item.pk %}"
+                                   class="btn btn-sm btn-warning">Editar</a>
+                                <a href="{% url 'visita_tecnica_excluir' item.pk %}"
+                                   class="btn btn-sm btn-danger">Excluir</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-warning text-center">Nenhuma visita técnica cadastrada para este dia.</div>
+        {% endif %}
+    </div>
+{% endblock %}

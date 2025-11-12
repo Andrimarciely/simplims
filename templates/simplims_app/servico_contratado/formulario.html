@@ -1,0 +1,29 @@
+<!-- templates/servico_contratado/formulario.html -->
+{% extends "base.html" %}
+{% block content %}
+<h1>
+    {% if form.instance.pk %}Editar{% else %}Novo{% endif %} Serviço Contratado
+</h1>
+
+<form method="post" class="mt-3">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="id_ordem_servico">Ordem de Serviço:</label>
+        {{ form.ordem_servico }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_servico">Serviço:</label>
+        {{ form.servico }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_quantidade_amostras">Quantidade de Amostras:</label>
+        {{ form.quantidade_amostras }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{% url 'servico_contratado_listar' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <center>
+        <h1>Oi, {{ nome }}!</h1>
+        <p>
+            Coletas em Campo para {{ data_calendario |date:"F" }} de {{ data_calendario|date:"Y" }} às {{ data_corrente|time }}
+        </p>
+    </center>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!-- templates/simplims_app/legislacao/lista.html -->
+{% extends "base.html" %}
+{% block content %}
+    <h1>Parâmetros CONAMA</h1>
+    <a href="{% url 'legislacao_criar' %}" class="btn btn-primary">Novo Parâmetro</a>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Parâmetro</th>
+                <th>Valor Máximo</th>
+                <th>Unidade de Medida</th>
+                <th>Observação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+                <tr>
+                    <td>{{ item.pk }}</td>
+                    <td>{{ item.parametro }}</td>
+                    <td>{{ item.valor_maximo }}</td>
+                    <td>{{ item.parametro.unidade_medida }}</td>
+                    <td>{{ item.observacao }}</td>
+                    <td>
+                        <a href="{% url 'legislacao_editar' item.pk %}"
+                           class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'legislacao_excluir' item.pk %}"
+                           class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">Nenhum parâmetro CONAMA cadastrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
