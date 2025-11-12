@@ -38,5 +38,8 @@ db.sqlite3
 # Logs
 *.log
 
-#chaves
+#chaves SSH
 .ssh/
+*.pem
+*.pub
+id_*
