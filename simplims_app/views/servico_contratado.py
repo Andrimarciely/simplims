@@ -14,12 +14,18 @@ from .mixins import DeleteRecordMixin
 
 class ServicoContratadoViewMixin:
     """
-    Mixin para views de ServicoContratado: define model, form e URL de sucesso.
+    Define o comportamento comum das views de ServicoContratado.
     """
-
     model = ServicoContratado
-    form_class = ServicoForm
+    form_class = ServicoContratadoForm
     success_url = reverse_lazy("servico_contratado_listar")
+
+    def get_ordem_servico_id(self):
+        """
+        Método auxiliar opcional para capturar o ID da ordem de serviço via GET.
+        Pode ser usado em CreateView ou em outros contextos específicos.
+        """
+        return self.request.GET.get("ordem_servico")
 
 
 class ServicoContratadoListView(ServicoContratadoViewMixin, ListView):
@@ -29,6 +35,19 @@ class ServicoContratadoListView(ServicoContratadoViewMixin, ListView):
 
 class ServicoContratadoCreateView(ServicoContratadoViewMixin, CreateView):
     template_name = "simplims_app/servico_contratado/formulario.html"
+
+    def get_initial(self):
+        initial = super().get_initial()
+        ordem_servico_id = self.request.GET.get("ordem_servico")
+        if ordem_servico_id:
+            initial["ordem_servico"] = ordem_servico_id
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ordem_servico_id = self.request.GET.get("ordem_servico")
+        context["ordem_servico_id"] = ordem_servico_id
+        return context
 
 
 class ServicoContratadoUpdateView(ServicoContratadoViewMixin, UpdateView):

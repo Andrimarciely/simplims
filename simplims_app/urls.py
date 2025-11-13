@@ -221,4 +221,9 @@ urlpatterns = [
         views.ServicoContratadoDeleteView.as_view(),
         name="servico_contratado_excluir",
     ),
+    path(
+    "servico_contratado/novo/<int:ordem_id>/",
+    views.ServicoContratadoCreateView.as_view(),
+    name="servico_contratado_criar_para_os",
+),
 ]

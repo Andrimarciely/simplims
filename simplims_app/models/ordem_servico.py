@@ -11,13 +11,7 @@ class OrdemServico(models.Model):
         Empresa, on_delete=models.CASCADE, verbose_name="Empresa Cliente"
     )
     observacoes = models.TextField(blank=True, null=True, verbose_name="Observações")
-    servicos = models.ManyToManyField(
-        Servico,
-        blank=False,
-        help_text="Selecione os serviços desta OS",
-        verbose_name="Serviços contratados",
-    )
-    resultados_servicos = models.JSONField(null=True, blank=True)
+
 
     def __str__(self) -> str:
         return f"OS {self.id} - {self.empresa}"
