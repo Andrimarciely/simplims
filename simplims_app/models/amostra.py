@@ -2,40 +2,32 @@ from django.db import models
 from .servico_contratado import ServicoContratado
 
 class Amostra(models.Model):
-    ordem_servico = models.ForeignKey(
-        "OrdemServico",
-        on_delete=models.CASCADE,
-        related_name="amostras"
-    )
 
     servico_contratado = models.ForeignKey(
         'ServicoContratado',
         on_delete=models.CASCADE,
         related_name='amostras',
-        #verbose_name='Serviço'
     )
+
     identificacao = models.CharField(
         max_length=50,
         verbose_name='Identificação',
         editable=False  # impede que o usuário altere manualmente
     )
+
     data_coleta = models.DateField(
         verbose_name='Data da Coleta'
     )
+
     hora_coleta = models.TimeField(
         verbose_name='Hora da Coleta',
         blank=True,
         null=True
     )
+
     local_coleta = models.CharField(
         max_length=100,
         verbose_name='Local da Coleta'
-    )
-    numero_ssl = models.CharField(
-        max_length=50,
-        verbose_name='Número do SSL',
-        blank=True,
-        null=True
     )
 
     class Meta:
