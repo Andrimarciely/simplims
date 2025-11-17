@@ -14,5 +14,6 @@ class ServicoContratado(models.Model):
 
     quantidade_amostras = models.PositiveIntegerField(default=2)
     ordering = ['-id']
+
     def __str__(self):
         return f"({self.ordem_servico.id}) {self.servico.descricao}"

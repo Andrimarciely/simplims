@@ -11,6 +11,7 @@ class AmostraViewMixin:
     """
     model = Amostra
     form_class = AmostraForm
+    ordering = ['-id']
     success_url = reverse_lazy("amostra_listar")
 
 
