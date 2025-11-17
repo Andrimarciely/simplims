@@ -19,6 +19,7 @@ class ServicoContratadoViewMixin:
     model = ServicoContratado
     form_class = ServicoContratadoForm
     success_url = reverse_lazy("servico_contratado_listar")
+    ordering = ['-id']
 
     def get_ordem_servico_id(self):
         """

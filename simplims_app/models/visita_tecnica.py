@@ -11,7 +11,9 @@ class VisitaTecnica(models.Model):
 
     ordem_servico = models.ForeignKey(
         "OrdemServico",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
 
     data_visita = models.DateField(verbose_name="Data da Visita")
