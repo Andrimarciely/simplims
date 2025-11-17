@@ -21,6 +21,7 @@ class OrdemServicoViewMixin:
     """
     model = OrdemServico
     form_class = OrdemServicoForm
+    ordering = ['-id']
     success_url = reverse_lazy("ordem_servico_listar")
 
 
