@@ -32,13 +32,12 @@
         <td>{{ item.observacoes|default:"- - -" }}</td>
         <td>{{ item.data_emissao|date:"d/m/Y" }}</td>
         <td>
-            <!-- <a href="{% url 'ordem_servico_resultados' item.pk %}"-->
-            <!-- class="btn btn-sm btn-info">Resultados</a>-->
-
             <a href="{% url 'servico_contratado_criar' %}?ordem_servico={{ item.id }}" class="btn btn-sm btn-success">
                 Adicionar Serviço
             </a>
-
+            <a href="{% url 'ordem_servico_analise' item.id %}" class="btn btn-info btn-sm">
+                Análise
+            </a>
             &nbsp;
             <a href="{% url 'ordem_servico_editar' item.pk %}"
                class="btn btn-sm btn-warning">Editar</a>

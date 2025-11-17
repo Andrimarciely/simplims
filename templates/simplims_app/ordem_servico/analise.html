@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Análise - Ordem de Serviço {{ os.id }}</h2>
+
+{% for bloco in analise_os %}
+    <h3 class="mt-4">{{ bloco.amostra.identificacao }}</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Parâmetro</th>
+                <th>Resultado</th>
+                <th>Unidade</th>
+                <th>Limite Máximo</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for item in bloco.linhas %}
+            {% with pa=item.pa legislacao=item.legislacao status=item.status %}
+            <tr
+                {% if status == "conforme" %} class="table-success"
+                {% elif status == "nao_conforme" %} class="table-danger"
+                {% elif status == "pendente" %} class="table-warning"
+                {% else %} class="table-secondary"
+                {% endif %}
+            >
+                <td>{{ pa.parametro.descricao }}</td>
+                <td>{{ pa.resultado }}</td>
+                <td>{{ pa.parametro.unidade_medida }}</td>
+                <td>
+                    {% if legislacao %}
+                        {{ legislacao.valor_maximo }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+                <td>
+                    {% if status == "conforme" %}
+                        ✔ Conforme
+                    {% elif status == "nao_conforme" %}
+                        ✖ Não Conforme
+                    {% elif status == "pendente" %}
+                        ⏳ Pendente
+                    {% elif status == "erro" %}
+                        ⚠ Valor inválido
+                    {% else %}
+                        — Sem limite definido
+                    {% endif %}
+                </td>
+            </tr>
+            {% endwith %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endfor %}
+
+<a href="{% url 'ordem_servico_listar' %}" class="btn btn-primary mt-3">
+    Voltar
+</a>
+
+{% endblock %}

@@ -122,10 +122,17 @@ urlpatterns = [
         name="ordem_servico_excluir",
     ),
     path(
-        "ordem_servico/<int:pk>/resultados/",
-        views.OrdemServicoResultadosUpdateView.as_view(),
-        name="ordem_servico_resultados",
+        "ordem_servico/<int:pk>/analise/",
+        views.OrdemServicoAnaliseView.as_view(),
+        name="ordem_servico_analise",
     ),
+    path(
+        "ordem_servico/<int:pk>/analise/",
+        views.OrdemServicoAnaliseView.as_view(),
+        name="ordem_servico_analise",
+    ),
+
+
     # URLs de Legislação
     path(
         "legislacao/",

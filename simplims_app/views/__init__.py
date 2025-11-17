@@ -23,7 +23,7 @@ from .ordem_servico import (
     OrdemServicoDeleteView,
     OrdemServicoListView,
     OrdemServicoUpdateView,
-    OrdemServicoResultadosUpdateView,
+    OrdemServicoAnaliseView
 )
 from .categoria_parametro import (
     CategoriaParametroCreateView,
