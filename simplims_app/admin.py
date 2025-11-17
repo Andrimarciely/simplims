@@ -11,7 +11,8 @@ from simplims_app.models import (
     Servico,
     VisitaTecnica,
     Amostra,
-    ServicoContratado
+    ServicoContratado,
+    ParametroAmostra
 )
 
 # Register your models here.
@@ -28,3 +29,4 @@ admin.site.register(Legislacao)
 admin.site.register(VisitaTecnica)
 admin.site.register(Amostra)
 admin.site.register(ServicoContratado)
+admin.site.register(ParametroAmostra)

@@ -72,6 +72,11 @@ from .servico_contratado import (
     ServicoContratadoUpdateView,
 )
 
+from.parametro_amostra import (
+    ParametroAmostraViewMixin,
+    ParametroAmostraListUpdateView,
+
+)
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from .servico_contratado import ServicoContratado
+from .categoria_parametro import CategoriaParametro
 
 class Amostra(models.Model):
     servico_contratado = models.ForeignKey(
@@ -28,6 +29,13 @@ class Amostra(models.Model):
     local_coleta = models.CharField(
         max_length=100,
         verbose_name='Local da Coleta'
+    )
+
+    categorias = models.ManyToManyField(
+        CategoriaParametro,
+        blank=True,
+        related_name="amostras",
+        verbose_name="Categorias de Parâmetros"
     )
 
     class Meta:

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Parâmetros da Amostra {{ amostra.identificacao }}</h2>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Parâmetro</th>
+                <th>Unidade</th>
+                <th>Categoria</th>
+                <th>Analisar?</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for pa in parametros %}
+            <tr>
+                <td>{{ pa.parametro.descricao }}</td>
+                <td>{{ pa.parametro.unidade_medida }}</td>
+                <td>{{ pa.parametro.categoria_parametro.descricao }}</td>
+
+                <td class="text-center">
+                    <input type="checkbox"
+                           name="analisar_{{ pa.id }}"
+                           {% if pa.analisar %}checked{% endif %}>
+                </td>
+
+                <td>
+                    <input type="text"
+                           name="resultado_{{ pa.id }}"
+                           class="form-control"
+                           value="{{ pa.resultado|default:'' }}">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button class="btn btn-success">Salvar Tudo</button>
+</form>
+
+{% endblock %}

@@ -32,17 +32,39 @@ class AmostraCreateView(AmostraViewMixin, CreateView):
 
     def form_valid(self, form):
         servico_id = self.request.GET.get("servico_contratado")
+
         if servico_id:
             form.instance.servico_contratado_id = servico_id
         else:
             form.add_error(None, "Serviço contratado não informado.")
             return self.form_invalid(form)
-        return super().form_valid(form)
+
+        # Salva a amostra normalmente
+        response = super().form_valid(form)
+
+        # Agora que self.object existe, e o ManyToMany já foi salvo,
+        # gerar os ParametroAmostra corretamente.
+        categorias = self.object.categorias.all()
+
+        from simplims_app.models import Parametro, ParametroAmostra
+
+        parametros = Parametro.objects.filter(
+            categoria_parametro__in=categorias
+        ).distinct()
+
+        for p in parametros:
+            ParametroAmostra.objects.get_or_create(
+                amostra=self.object,
+                parametro=p
+            )
+        # ---- AQUI TERMINA A PARTE NOVA ----
+
+        return response
 
     def get_success_url(self):
-        # Depois de criar uma amostra, redirecionar mantendo o mesmo serviço
         servico_id = self.object.servico_contratado_id
         return reverse_lazy("amostra_criar") + f"?servico_contratado={servico_id}"
+
 
 
 

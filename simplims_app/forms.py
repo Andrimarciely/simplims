@@ -193,10 +193,12 @@ class AmostraForm(forms.ModelForm):
             "data_coleta",
             "hora_coleta",
             "local_coleta",
+            "categorias",
         ]
         widgets = {
             "data_coleta": forms.DateInput(attrs={"type": "date"}),
             "hora_coleta": forms.TimeInput(attrs={"type": "time"}),
+            "categorias": forms.CheckboxSelectMultiple(),
         }
 
     def __init__(self, *args, **kwargs):

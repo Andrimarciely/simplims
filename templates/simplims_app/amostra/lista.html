@@ -1,39 +1,45 @@
 <!-- templates/simplims_app/amostra/lista.html -->
 {% extends "base.html" %}
 {% block content %}
-    <h1>Lista de Amostras</h1>
-    <a href="{% url 'amostra_criar' %}" class="btn btn-primary">Nova Amostra</a>
-    <table class="table table-striped mt-3">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Identificação</th>
-                <th>Serviço</th>
-                <th>Data da Coleta</th>
-                <th>Hora da Coleta</th>
-                <th>Local da Coleta</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in object_list %}
-                <tr>
-                    <td>{{ item.pk }}</td>
-                    <td>{{ item.identificacao }}</td>
-                    <td>{{ item.servico_contratado.servico.descricao }}</td>
-                    <td>{{ item.data_coleta }}</td>
-                    <td>{{ item.hora_coleta }}</td>
-                    <td>{{ item.local_coleta }}</td>
-                    <td>
-                        <a href="{% url 'amostra_editar' item.pk %}" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="{% url 'amostra_excluir' item.pk %}" class="btn btn-sm btn-danger">Excluir</a>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="7">Nenhuma amostra cadastrada.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<h1>Lista de Amostras</h1>
+<a href="{% url 'amostra_criar' %}" class="btn btn-primary">Nova Amostra</a>
+<table class="table table-striped mt-3">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Identificação</th>
+        <th>Serviço</th>
+        <th>Data da Coleta</th>
+        <th>Hora da Coleta</th>
+        <th>Local da Coleta</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in object_list %}
+    <tr>
+        <td>{{ item.pk }}</td>
+        <td>{{ item.identificacao }}</td>
+        <td>{{ item.servico_contratado.servico.descricao }}</td>
+        <td>{{ item.data_coleta }}</td>
+        <td>{{ item.hora_coleta }}</td>
+        <td>{{ item.local_coleta }}</td>
+
+        <td>
+            {% if item.id %}
+            <a href="{% url 'amostra_parametro' item.id %}" class="btn btn-info btn-sm">
+                Parâmetros
+            </a>
+            {% endif %}
+            <a href="{% url 'amostra_editar' item.pk %}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="{% url 'amostra_excluir' item.pk %}" class="btn btn-sm btn-danger">Excluir</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="7">Nenhuma amostra cadastrada.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

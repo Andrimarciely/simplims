@@ -200,7 +200,12 @@ urlpatterns = [
         views.AmostraDeleteView.as_view(),
         name="amostra_excluir",
     ),
-
+    # URLs da ParametroAmostra
+    path(
+        "amostra/<int:pk>/parametro_amostra/",
+        views.ParametroAmostraListUpdateView.as_view(),
+        name="amostra_parametro"
+    ),
     # URLs de ServicoContratado
     path(
         "servico_contratado/",
@@ -227,4 +232,5 @@ urlpatterns = [
     views.ServicoContratadoCreateView.as_view(),
     name="servico_contratado_criar_para_os",
 ),
+
 ]

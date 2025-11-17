@@ -9,3 +9,4 @@ from .legislacao import *
 from .visita_tecnica import *
 from .amostra import *
 from .servico_contratado import *
+from .parametro_amostra import *
