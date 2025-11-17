@@ -39,6 +39,12 @@ class AmostraCreateView(AmostraViewMixin, CreateView):
             return self.form_invalid(form)
         return super().form_valid(form)
 
+    def get_success_url(self):
+        # Depois de criar uma amostra, redirecionar mantendo o mesmo serviço
+        servico_id = self.object.servico_contratado_id
+        return reverse_lazy("amostra_criar") + f"?servico_contratado={servico_id}"
+
+
 
 class AmostraUpdateView(AmostraViewMixin, UpdateView):
     template_name = "simplims_app/amostra/formulario.html"
