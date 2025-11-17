@@ -39,10 +39,8 @@ class Amostra(models.Model):
         return f"{self.identificacao}"
 
     def save(self, *args, **kwargs):
-        # Gera automaticamente a identificação se ainda não existir
         if not self.identificacao:
-            prefixo = "MJ-"
-            # Conta quantas amostras já existem para esse serviço
-            total = Amostra.objects.filter(servico_contratado=self.servico_contratado).count() + 1
-            self.identificacao = f"{prefixo}-{total:03d}"
+            # Conta quantas amostras existem no banco
+            total = Amostra.objects.count() + 1
+            self.identificacao = f"MJ-{total:03d}"
         super().save(*args, **kwargs)
