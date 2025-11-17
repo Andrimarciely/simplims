@@ -189,11 +189,10 @@ class AmostraForm(forms.ModelForm):
     class Meta:
         model = Amostra
         fields = [
-            "servico_contratado",
+            'servico_contratado',
             "data_coleta",
             "hora_coleta",
             "local_coleta",
-            "numero_ssl",
         ]
         widgets = {
             "data_coleta": forms.DateInput(attrs={"type": "date"}),
@@ -203,21 +202,6 @@ class AmostraForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # 🔹 Caso queira filtrar os serviços contratados por alguma OS (opcional)
-        if "ordem_servico" in self.data:
-            try:
-                ordem_id = int(self.data.get("ordem_servico"))
-                self.fields["servico_contratado"].queryset = ServicoContratado.objects.filter(
-                    ordem_servico_id=ordem_id
-                )
-            except (ValueError, TypeError):
-                pass
-        elif self.instance.pk:
-            self.fields["servico_contratado"].queryset = ServicoContratado.objects.filter(
-                ordem_servico=self.instance.servico_contratado.ordem_servico
-            )
-        else:
-            self.fields["servico_contratado"].queryset = ServicoContratado.objects.all()
 
 class ServicoContratadoForm(forms.ModelForm):
     class Meta:

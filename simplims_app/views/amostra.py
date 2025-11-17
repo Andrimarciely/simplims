@@ -1,6 +1,5 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-
 from ..forms import AmostraForm
 from ..models import Amostra
 from .mixins import DeleteRecordMixin
@@ -23,10 +22,28 @@ class AmostraListView(AmostraViewMixin, ListView):
 class AmostraCreateView(AmostraViewMixin, CreateView):
     template_name = "simplims_app/amostra/formulario.html"
 
+    def get_initial(self):
+        initial = super().get_initial()
+        servico_id = self.request.GET.get("servico_contratado")
+        if servico_id:
+            initial["servico_contratado"] = servico_id
+        return initial
+
+    def form_valid(self, form):
+        servico_id = self.request.GET.get("servico_contratado")
+        if servico_id:
+            form.instance.servico_contratado_id = servico_id
+        else:
+            form.add_error(None, "Serviço contratado não informado.")
+            return self.form_invalid(form)
+        return super().form_valid(form)
+
 
 class AmostraUpdateView(AmostraViewMixin, UpdateView):
     template_name = "simplims_app/amostra/formulario.html"
 
 
+
 class AmostraDeleteView(AmostraViewMixin, DeleteRecordMixin, DeleteView):
     template_name = "simplims_app/amostra/confirmar_exclusao.html"
+

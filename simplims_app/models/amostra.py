@@ -2,11 +2,11 @@ from django.db import models
 from .servico_contratado import ServicoContratado
 
 class Amostra(models.Model):
-
     servico_contratado = models.ForeignKey(
-        'ServicoContratado',
+        ServicoContratado,
         on_delete=models.CASCADE,
-        related_name='amostras',
+        null=False,  # se não permitir nulo, é obrigatório
+        blank=False
     )
 
     identificacao = models.CharField(

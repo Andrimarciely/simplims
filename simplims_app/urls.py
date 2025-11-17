@@ -200,6 +200,7 @@ urlpatterns = [
         views.AmostraDeleteView.as_view(),
         name="amostra_excluir",
     ),
+
     # URLs de ServicoContratado
     path(
         "servico_contratado/",
