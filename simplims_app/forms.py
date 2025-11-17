@@ -93,18 +93,18 @@ class ServicoForm(forms.ModelForm):
 
 class OrdemServicoForm(forms.ModelForm):
 
-    servicos = forms.ModelMultipleChoiceField(
-        label="Serviços",
-        help_text="Selecione um ou mais serviços",
-        queryset=Servico.objects.all(),
-        required=True,
-    )
+    # servicos = forms.ModelMultipleChoiceField(
+    #     label="Serviços",
+    #     help_text="Selecione um ou mais serviços",
+    #     queryset=Servico.objects.all(),
+    #     required=True,
+    # )
 
     class Meta:
         model = OrdemServico
         fields = [
             "empresa",
-            "servicos",
+        #    "servicos",
             "observacoes",
         ]
 

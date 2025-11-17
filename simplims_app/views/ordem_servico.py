@@ -20,6 +20,9 @@ class OrdemServicoViewMixin:
     form_class = OrdemServicoForm
     success_url = reverse_lazy("ordem_servico_listar")
 
+    def get_queryset(self):
+        return OrdemServico.objects.order_by('-id')
+
 
 class OrdemServicoListView(OrdemServicoViewMixin, ListView):
     # context_object_name = "ordem_servico"

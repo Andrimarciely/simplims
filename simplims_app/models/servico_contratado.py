@@ -12,7 +12,7 @@ class ServicoContratado(models.Model):
         on_delete=models.CASCADE,
     )
 
-    quantidade_amostras = models.PositiveIntegerField(default=1)
+    quantidade_amostras = models.PositiveIntegerField(default=2)
 
     def __str__(self):
         return f"({self.ordem_servico.id}) {self.servico.descricao}"

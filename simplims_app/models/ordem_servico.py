@@ -1,8 +1,6 @@
 from django.db import models
-
-from . import Matriz
 from .empresa import Empresa
-from .servico import Servico
+
 
 
 class OrdemServico(models.Model):
@@ -11,7 +9,7 @@ class OrdemServico(models.Model):
         Empresa, on_delete=models.CASCADE, verbose_name="Empresa Cliente"
     )
     observacoes = models.TextField(blank=True, null=True, verbose_name="Observações")
-
+    ordering = ['-data_emissao', '-id']
 
     def __str__(self) -> str:
         return f"OS {self.id} - {self.empresa}"
