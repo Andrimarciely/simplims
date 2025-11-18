@@ -12,8 +12,10 @@ class ServicoContratado(models.Model):
         on_delete=models.CASCADE,
     )
 
-    quantidade_amostras = models.PositiveIntegerField(default=2)
-
+    local_coleta = models.CharField(
+        max_length=255,
+        verbose_name="Local de coleta (rio, igarapé, etc.)"
+    )
 
     def __str__(self):
         return f"({self.ordem_servico.id}) {self.servico.descricao}"
