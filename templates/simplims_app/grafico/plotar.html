@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+
+    <h2>Gráfico de Parâmetros</h2>
+
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-3">
+            {{ form.ano.label_tag }}  
+            {{ form.ano }}
+        </div>
+        <div class="col-md-4">
+            {{ form.local.label_tag }}  
+            {{ form.local }}
+        </div>
+        <div class="col-md-5">
+            {{ form.parametro.label_tag }}  
+            {{ form.parametro }}
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Gerar Gráfico</button>
+        </div>
+    </form>
+
+    {% if grafico %}
+        <div class="card shadow p-3">
+            <img class="img-fluid" src="data:image/png;base64,{{ grafico }}" alt="Gráfico">
+        </div>
+    {% else %}
+        <p class="text-muted">Selecione os filtros para gerar o gráfico.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

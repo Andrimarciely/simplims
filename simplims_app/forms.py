@@ -10,7 +10,8 @@ from .models import (
     Legislacao,
     VisitaTecnica,
     Amostra,
-    ServicoContratado
+    ServicoContratado,
+    ParametroAmostra
 )
 
 
@@ -213,14 +214,30 @@ class ServicoContratadoForm(forms.ModelForm):
     class Meta:
         model = ServicoContratado
         fields = ["ordem_servico", "servico", "local"]
-        # widgets = {
-        #     "ordem_servico": forms.Select(attrs={"class": "form-select", "onchange": "this.form.submit();"}),
-        #     "servico": forms.Select(attrs={"class": "form-select"}),
-        #     "quantidade_amostras": forms.NumberInput(attrs={"class": "form-control", "min": 0}),
-        # }
-        # labels = {
-        #     "ordem_servico": "Ordem de Serviço",
-        #     "servico": "Serviço",
-        #     "quantidade_amostras": "Quantidade de Amostras",
-        # }
 
+
+class GraficoFiltroForm(forms.Form):
+    ano = forms.ChoiceField(label="Ano")
+    local = forms.ChoiceField(label="Local")
+    parametro = forms.ModelChoiceField(
+        queryset=Parametro.objects.all(),
+        label="Parâmetro"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Anos disponíveis (pelas datas de coleta)
+        anos = (
+            Amostra.objects.order_by("data_coleta")
+            .values_list("data_coleta__year", flat=True)
+            .distinct()
+        )
+        self.fields["ano"].choices = [(a, a) for a in anos]
+
+        # Locais distintos vindos do ServicoContratado
+        locais = (
+            ServicoContratado.objects.values_list("local", flat=True)
+            .distinct()
+        )
+        self.fields["local"].choices = [(l, l) for l in locais]

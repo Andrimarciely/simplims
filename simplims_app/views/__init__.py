@@ -77,6 +77,10 @@ from.parametro_amostra import (
     ParametroAmostraListUpdateView,
 
 )
+
+from .plotar_grafico import plotar_grafico
+
+
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
 

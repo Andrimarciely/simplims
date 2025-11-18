@@ -238,6 +238,8 @@ urlpatterns = [
     "servico_contratado/novo/<int:ordem_id>/",
     views.ServicoContratadoCreateView.as_view(),
     name="servico_contratado_criar_para_os",
-),
+    ),
+    # URL de Grafico
+    path("grafico/", views.plotar_grafico, name="plotar_grafico"),
 
 ]
