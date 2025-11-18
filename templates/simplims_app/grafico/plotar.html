@@ -4,23 +4,25 @@
 
     <h2>Gráfico de Parâmetros</h2>
 
-    <form method="get" class="row g-3 mb-4">
-        <div class="col-md-3">
-            {{ form.ano.label_tag }}  
+
+    <form method="get" class="d-flex gap-3 align-items-end mb-4 flex-wrap">
+
+        <div>
+            {{ form.ano.label_tag }}
             {{ form.ano }}
         </div>
-        <div class="col-md-4">
-            {{ form.local.label_tag }}  
+
+        <div>
+            {{ form.local.label_tag }}
             {{ form.local }}
         </div>
-        <div class="col-md-5">
-            {{ form.parametro.label_tag }}  
+
+        <div>
+            {{ form.parametro.label_tag }}
             {{ form.parametro }}
         </div>
 
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Gerar Gráfico</button>
-        </div>
+        <button class="btn btn-primary" type="submit">Gerar Gráfico</button>
     </form>
 
     {% if grafico %}
