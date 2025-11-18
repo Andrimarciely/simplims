@@ -168,22 +168,26 @@ def customize_ordem_servico_resultado_form(
 
 class OrdemServicoResultadosForm(forms.ModelForm):
 
-         class Meta:
-             model = OrdemServico
-             fields = []
+    class Meta:
+        model = OrdemServico
+        fields = []
 
-         def __init__(self, *args, **kwargs):
-             super().__init__(*args, **kwargs)
+    def __init__(self, *args, dynamic_fields=None, **kwargs):
+        super().__init__(*args, **kwargs)
 
-             for item in fields:
-                 field, label, initial = (
-                     item["field"],
-                     item["label"],
-                     item.get("initial"),
-                 )
-                 self.fields[field] = CustomCharField(label=label, initial=initial)
-                 self.Meta.fields.append(field)
-                 return OrdemServicoResultadosForm
+
+        if dynamic_fields:
+            for item in dynamic_fields:
+                field = item["field"]
+                label = item["label"]
+                initial = item.get("initial")
+
+                self.fields[field] = CustomCharField(
+                    label=label,
+                    initial=initial,
+                    required=False
+                )
+
 
 class AmostraForm(forms.ModelForm):
     class Meta:
@@ -192,7 +196,6 @@ class AmostraForm(forms.ModelForm):
             'servico_contratado',
             "data_coleta",
             "hora_coleta",
-            "local_coleta",
             "categorias",
         ]
         widgets = {
@@ -208,7 +211,7 @@ class AmostraForm(forms.ModelForm):
 class ServicoContratadoForm(forms.ModelForm):
     class Meta:
         model = ServicoContratado
-        fields = ["ordem_servico", "servico", "quantidade_amostras"]
+        fields = ["ordem_servico", "servico"]
         # widgets = {
         #     "ordem_servico": forms.Select(attrs={"class": "form-select", "onchange": "this.form.submit();"}),
         #     "servico": forms.Select(attrs={"class": "form-select"}),

@@ -12,7 +12,7 @@ class ServicoContratado(models.Model):
         on_delete=models.CASCADE,
     )
 
-    local_coleta = models.CharField(
+    local= models.CharField(
         max_length=255,
         verbose_name="Local de coleta (rio, igarapé, etc.)"
     )

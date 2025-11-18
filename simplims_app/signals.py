@@ -18,7 +18,6 @@ def criar_visita_tecnica_para_amostra(sender, instance, created, **kwargs):
         ordem_servico=ordem_servico,   # ← se existir, preenche
         data_visita=instance.data_coleta,
         hora_visita=instance.hora_coleta,
-        local=instance.local_coleta,
         responsavel="A definir",
         status="PENDENTE",
     )

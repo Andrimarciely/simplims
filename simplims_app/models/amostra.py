@@ -26,9 +26,16 @@ class Amostra(models.Model):
         null=True
     )
 
-    local_coleta = models.CharField(
-        max_length=100,
-        verbose_name='Local da Coleta'
+    TIPO_PONTO = (
+        ("MONTANTE", "Montante"),
+        ("JUSANTE", "Jusante"),
+        ("NA", "Não se aplica"),
+    )
+
+    tipo_ponto = models.CharField(
+        max_length=10,
+        choices=TIPO_PONTO,
+        verbose_name="Ponto (Montante/Jusante/Não se aplica)"
     )
 
     categorias = models.ManyToManyField(
