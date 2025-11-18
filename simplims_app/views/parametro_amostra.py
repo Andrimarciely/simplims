@@ -48,5 +48,5 @@ class ParametroAmostraListUpdateView(ParametroAmostraViewMixin, View):
             pa.resultado = request.POST.get(f"resultado_{pa.id}", "")
             pa.save()
 
-        return redirect("amostra_parametro", pk=amostra.id)
+        return redirect("amostra_listar")
 
