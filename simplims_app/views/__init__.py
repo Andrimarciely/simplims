@@ -1,9 +1,12 @@
-import calendar
 import locale
-from calendar import HTMLCalendar
-from datetime import datetime, timedelta
-
+from datetime import date, datetime, timedelta
 from django.shortcuts import render
+from django.db.models import Count, Q
+
+from ..models.ordem_servico import OrdemServico
+from ..models.visita_tecnica import VisitaTecnica
+from ..models.amostra import Amostra
+from ..models.parametro_amostra import ParametroAmostra
 
 from .empresa import (
     EmpresaCreateView,
@@ -18,6 +21,7 @@ from .legislacao import (
     LegislacaoUpdateView,
 )
 from .matriz import MatrizCreateView, MatrizDeleteView, MatrizListView, MatrizUpdateView
+
 from .ordem_servico import (
     OrdemServicoCreateView,
     OrdemServicoDeleteView,
@@ -84,25 +88,57 @@ from .plotar_grafico import plotar_grafico
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
 
-def home(request, ano=None, mes=None):
-    nome = "Andrimarciely"
+def home(request):
+    hoje = date.today()
+    ano = hoje.year
+    mes = hoje.month
 
-    data_corrente = datetime.now()
+    # Cards
+    total_os_mes = OrdemServico.objects.filter(
+        data_emissao__year=ano,
+        data_emissao__month=mes
+    ).count()
 
-    if not ano:
-        ano = data_corrente.year
+    visitas_pendentes = VisitaTecnica.objects.filter(
+        status="PENDENTE",
+        data_visita__gte=hoje
+    ).count()
 
-    if not mes:
-        mes = data_corrente.month
+    amostras_hoje = Amostra.objects.filter(
+        data_coleta=hoje
+    ).count()
 
-    data_do_calendario = datetime(ano, mes, 1)
+    pendentes_analise = ParametroAmostra.objects.filter(
+        Q(resultado__isnull=True) | Q(resultado="")
+    ).count()
 
-    return render(
-        request,
-        "home.html",
-        {
-            "nome": nome,
-            "data_corrente": data_corrente,
-            "data_calendario": data_do_calendario,
-        },
+    # Próximas visitas
+    proximas_visitas = VisitaTecnica.objects.filter(
+        data_visita__gte=hoje
+    ).order_by("data_visita", "hora_visita")[:5]
+
+    # Gráfico: amostras por mês
+    amostras_por_mes = (
+        Amostra.objects.filter(data_coleta__year=ano)
+        .values("data_coleta__month")
+        .annotate(total=Count("id"))
+        .order_by("data_coleta__month")
     )
+
+    labels = list(range(1, 13))
+    valores = [
+        next((item["total"] for item in amostras_por_mes if item["data_coleta__month"] == mes), 0)
+        for mes in labels
+    ]
+
+    context = {
+        "total_os_mes": total_os_mes,
+        "visitas_pendentes": visitas_pendentes,
+        "amostras_hoje": amostras_hoje,
+        "pendentes_analise": pendentes_analise,
+        "proximas_visitas": proximas_visitas,
+        "grafico_labels": labels,
+        "grafico_valores": valores,
+    }
+
+    return render(request, "dashboard.html", context)

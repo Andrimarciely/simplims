@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row text-center mb-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3>{{ total_os_mes }}</h3>
+                <p>OS do Mês</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3>{{ visitas_pendentes }}</h3>
+                <p>Visitas Pendentes</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3>{{ amostras_hoje }}</h3>
+                <p>Amostras Hoje</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3>{{ pendentes_analise }}</h3>
+                <p>Análises Pendentes</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mt-4">Próximas Visitas Técnicas</h4>
+<ul class="list-group mb-4">
+    {% for visita in proximas_visitas %}
+        <li class="list-group-item">
+            <strong>{{ visita.data_visita }}</strong>
+            {% if visita.hora_visita %} às {{ visita.hora_visita }}{% endif %}
+            – {{ visita.local }}
+            <span class="badge bg-secondary float-end">{{ visita.get_status_display }}</span>
+        </li>
+    {% empty %}
+        <li class="list-group-item">Nenhuma visita agendada.</li>
+    {% endfor %}
+</ul>
+
+<h4>Amostras por Mês ({{ grafico_labels|length }})</h4>
+<canvas id="graficoAmostras"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('graficoAmostras');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ grafico_labels|safe }},
+            datasets: [{
+                label: 'Amostras',
+                data: {{ grafico_valores|safe }},
+                borderWidth: 2
+            }]
+        }
+    });
+</script>
+
+{% endblock %}
