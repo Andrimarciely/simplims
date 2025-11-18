@@ -12,20 +12,27 @@
         <p><strong>Ordem de Serviço:</strong> {{ ordem_servico_id }}</p>
     {% else %}
         <div class="mb-3">
-            <label for="id_ordem_servico">Ordem de Serviço:</label>
+            <label for="{{ form.ordem_servico.id_for_label }}" class="form-label">Ordem de Serviço:</label>
             {{ form.ordem_servico }}
         </div>
     {% endif %}
 
     <div class="mb-3">
-        <label for="id_servico">Serviço:</label>
+        <label for="{{ form.servico.id_for_label }}" class="form-label">Serviço:</label>
         {{ form.servico }}
     </div>
 
     <div class="mb-3">
-        <label for="id_quantidade_amostras">Quantidade de Amostras:</label>
-        {{ form.quantidade_amostras }}
-    </div>
+    <label for="id_local" class="form-label">
+        {{ form.local.label }}
+    </label>
+    {{ form.local }}
+    {% if form.local.errors %}
+        <div class="text-danger">
+            {{ form.local.errors }}
+        </div>
+    {% endif %}
+</div>
 
     <button type="submit" class="btn btn-success">Salvar</button>
     <a href="{% url 'servico_contratado_listar' %}" class="btn btn-secondary">Cancelar</a>

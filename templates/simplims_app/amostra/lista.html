@@ -11,7 +11,7 @@
         <th>Serviço</th>
         <th>Data da Coleta</th>
         <th>Hora da Coleta</th>
-        <th>Local da Coleta</th>
+        <th>Ponto da Coleta</th>
         <th>Ações</th>
     </tr>
     </thead>
@@ -23,7 +23,7 @@
         <td>{{ item.servico_contratado.servico.descricao }}</td>
         <td>{{ item.data_coleta }}</td>
         <td>{{ item.hora_coleta }}</td>
-        <td>{{ item.local_coleta }}</td>
+        <td>{{ item.tipo_ponto }}</td>
 
         <td>
             {% if item.id %}

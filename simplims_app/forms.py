@@ -196,6 +196,7 @@ class AmostraForm(forms.ModelForm):
             'servico_contratado',
             "data_coleta",
             "hora_coleta",
+            "tipo_ponto",
             "categorias",
         ]
         widgets = {
@@ -211,7 +212,7 @@ class AmostraForm(forms.ModelForm):
 class ServicoContratadoForm(forms.ModelForm):
     class Meta:
         model = ServicoContratado
-        fields = ["ordem_servico", "servico"]
+        fields = ["ordem_servico", "servico", "local"]
         # widgets = {
         #     "ordem_servico": forms.Select(attrs={"class": "form-select", "onchange": "this.form.submit();"}),
         #     "servico": forms.Select(attrs={"class": "form-select"}),

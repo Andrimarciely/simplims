@@ -12,7 +12,7 @@
             <th>ID</th>
             <th>Ordem de Serviço</th>
             <th>Serviço</th>
-            <th>Quantidade de Amostras</th>
+            <th>Local</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -22,7 +22,7 @@
                 <td>{{ item.pk }}</td>
                 <td>{{ item.ordem_servico }}</td>
                 <td>{{ item.servico.descricao }}</td>
-                <td>{{ item.quantidade_amostras }}</td>
+                <td>{{ item.local }}</td>
                 <td>
                     <a href="{% url 'amostra_criar' %}?servico_contratado={{ item.id }}"
                        class="btn btn-sm btn-success">
