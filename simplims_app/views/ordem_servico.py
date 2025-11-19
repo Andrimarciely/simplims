@@ -53,9 +53,8 @@ class OrdemServicoAnaliseMixin:
     template_name = "simplims_app/ordem_servico/analise.html"
 
     def montar_analise(self, ordem_servico):
-        from simplims_app.models import ParametroAmostra, Legislacao
+        from simplims_app.models import ParametroAmostra, Legislacao, Amostra
 
-        # 🔥 CORREÇÃO AQUI:
         amostras = Amostra.objects.filter(
             servico_contratado__ordem_servico=ordem_servico
         ).order_by("identificacao")

@@ -58,8 +58,16 @@
 
 {% endfor %}
 
-<a href="{% url 'ordem_servico_listar' %}" class="btn btn-primary mt-3">
-    Voltar
-</a>
+<div class="d-flex gap-2 mt-3">
+    <a href="{% url 'ordem_servico_listar' %}" class="btn btn-primary">
+        Voltar
+    </a>
+
+    <a href="{% url 'ordem_servico_relatorio_pdf' pk=os.id %}"
+       class="btn btn-danger" target="_blank">
+       📄 Gerar PDF
+    </a>
+</div>
+
 
 {% endblock %}

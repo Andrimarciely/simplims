@@ -127,12 +127,10 @@ urlpatterns = [
         name="ordem_servico_analise",
     ),
     path(
-        "ordem_servico/<int:pk>/analise/",
-        views.OrdemServicoAnaliseView.as_view(),
-        name="ordem_servico_analise",
+        "ordem_servico/<int:pk>/relatorio/",
+        views.OrdemServicoRelatorioPDFView.as_view(),
+        name="ordem_servico_relatorio_pdf",
     ),
-
-
     # URLs de Legislação
     path(
         "legislacao/",

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 35px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #444;
+            margin-bottom: 25px;
+        }
+
+        .header img {
+            width: 60px;
+        }
+
+        .empresa-nome {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin-top: 25px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 6px;
+            border: 1px solid #444;
+        }
+
+        th {
+            background: #eee;
+        }
+
+        /* Cores iguais às da análise no HTML */
+        .conforme     { background: #d4edda; }
+        .nao_conforme { background: #f8d7da; }
+        .pendente     { background: #fff3cd; }
+        .erro         { background: #e2e3e5; }
+        .sem_limite   { background: #f1f1f1; }
+    </style>
+</head>
+
+<body>
+
+<!-- Cabeçalho -->
+<div class="header">
+    <img src="file://{{ logo_path }}" alt="Logo">
+    <div class="empresa-nome">ACME Consultoria Ambiental</div>
+</div>
+
+<!-- Título -->
+<h1>Relatório de Ensaio Montante Jusante</h1>
+
+<!-- Dados da OS -->
+<h2>Ordem de Serviço {{ os.id }}</h2>
+
+<!-- Dados do Cliente -->
+<h2>Dados do Cliente</h2>
+
+<p><strong>Razão Social:</strong> {{ os.empresa.razao_social }}</p>
+<p><strong>CNPJ:</strong> {{ os.empresa.cnpj }}</p>
+<p><strong>Endereço:</strong> {{ os.empresa.endereco }}</p>
+<p><strong>Telefone:</strong> {{ os.empresa.telefone }}</p>
+
+{% if os.empresa.responsavel_tecnico %}
+<p><strong>Responsável Técnico:</strong> {{ os.empresa.responsavel_tecnico }}</p>
+{% endif %}
+
+
+<h2>Resultados das Amostras</h2>
+
+{% for bloco in analise_os %}
+    <h3>Amostra: {{ bloco.amostra.identificacao }}</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Parâmetro</th>
+                <th>Resultado</th>
+                <th>Unidade</th>
+                <th>Limite</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in bloco.linhas %}
+            <tr class="{{ item.status }}">
+                <td>{{ item.pa.parametro.descricao }}</td>
+                <td>{{ item.pa.resultado }}</td>
+                <td>{{ item.pa.parametro.unidade_medida }}</td>
+
+                <td>
+                    {% if item.legislacao %}
+                        {{ item.legislacao.valor_maximo }}
+                    {% else %} — {% endif %}
+                </td>
+
+                <td>
+                    {% if item.status == "conforme" %}
+                        ✔ Conforme
+                    {% elif item.status == "nao_conforme" %}
+                        ✖ Não Conforme
+                    {% elif item.status == "pendente" %}
+                        ⏳ Pendente
+                    {% elif item.status == "erro" %}
+                        ⚠ Erro
+                    {% else %}
+                        — Sem limite
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
+
+</body>
+</html>

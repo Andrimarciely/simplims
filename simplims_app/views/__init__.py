@@ -84,6 +84,7 @@ from.parametro_amostra import (
 
 from .plotar_grafico import plotar_grafico
 
+from .relatorio import OrdemServicoRelatorioPDFView
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
