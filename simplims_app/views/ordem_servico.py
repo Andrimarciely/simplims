@@ -5,6 +5,7 @@ Tudo o que é relativo às views de OrdemServico ficam aqui
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.db.models import Q
 
 from ..forms import OrdemServicoForm, customize_ordem_servico_resultado_form
 from ..models import OrdemServico
@@ -28,6 +29,18 @@ class OrdemServicoListView(OrdemServicoViewMixin, ListView):
     # context_object_name = "ordem_servico"
     template_name = "simplims_app/ordem_servico/lista.html"
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        termo = self.request.GET.get("q")
+        if termo:
+            qs = qs.filter(
+                Q(id__icontains=termo) |
+                Q(empresa__apelido__icontains=termo) |
+                Q(observacoes__icontains=termo)
+            )
+
+        return qs
 
 class OrdemServicoCreateView(OrdemServicoViewMixin, CreateView):
     template_name = "simplims_app/ordem_servico/formulario.html"
