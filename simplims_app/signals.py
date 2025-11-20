@@ -12,10 +12,12 @@ def criar_visita_tecnica_para_amostra(sender, instance, created, **kwargs):
     # Tenta pegar Ordem de Serviço da Amostra
     servico = instance.servico_contratado
     ordem_servico = getattr(servico, "ordem_servico", None)
+    local = servico.local
 
     # Cria a visita técnica (ordem_servico pode ser NULL)
     VisitaTecnica.objects.create(
-        ordem_servico=ordem_servico,   # ← se existir, preenche
+        ordem_servico=ordem_servico,
+        local=local,
         data_visita=instance.data_coleta,
         hora_visita=instance.hora_coleta,
         responsavel="A definir",

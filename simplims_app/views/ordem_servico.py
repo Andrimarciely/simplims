@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.db.models import Q
 
 from ..forms import OrdemServicoForm
 from ..models import OrdemServico, Amostra, ParametroAmostra, Legislacao
@@ -32,6 +33,18 @@ class OrdemServicoViewMixin:
 class OrdemServicoListView(OrdemServicoViewMixin, ListView):
     template_name = "simplims_app/ordem_servico/lista.html"
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        termo = self.request.GET.get("q")
+        if termo:
+            qs = qs.filter(
+                Q(id__icontains=termo) |
+                Q(empresa__apelido__icontains=termo) |
+                Q(observacoes__icontains=termo)
+            )
+
+        return qs
 
 class OrdemServicoCreateView(OrdemServicoViewMixin, CreateView):
     template_name = "simplims_app/ordem_servico/formulario.html"

@@ -2,7 +2,17 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Lista de Ordens de Serviços</h1>
-<a href="{% url 'ordem_servico_criar' %}" class="btn btn-primary">Nova Ordem de Serviço</a>
+<div class="d-flex align-items-center mb-3 gap-2">
+    <a href="{% url 'ordem_servico_criar' %}" class="btn btn-primary">Nova Ordem de Serviço</a>
+
+    <form method="get" class="mb-0 flex-grow-1">
+        <input type="text"
+               name="q"
+               value="{{ request.GET.q }}"
+               placeholder="Buscar..."
+               class="form-control">
+    </form>
+</div>
 <table class="table table-striped mt-3">
     <thead>
     <tr>
