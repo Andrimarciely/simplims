@@ -1,6 +1,6 @@
 from django.db import models
 
-from simplims_app.models import TipoParametro, CategoriaParametro
+from simplims_app.models import CategoriaParametro, TipoParametro
 
 
 class Parametro(models.Model):

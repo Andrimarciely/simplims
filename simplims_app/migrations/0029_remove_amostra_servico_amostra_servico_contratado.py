@@ -7,18 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0028_servicocontratado'),
+        ("simplims_app", "0028_servicocontratado"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='amostra',
-            name='servico',
+            model_name="amostra",
+            name="servico",
         ),
         migrations.AddField(
-            model_name='amostra',
-            name='servico_contratado',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='amostras', to='simplims_app.servicocontratado'),
+            model_name="amostra",
+            name="servico_contratado",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="amostras",
+                to="simplims_app.servicocontratado",
+            ),
             preserve_default=False,
         ),
     ]

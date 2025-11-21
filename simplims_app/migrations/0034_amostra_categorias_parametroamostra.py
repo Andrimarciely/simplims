@@ -7,28 +7,62 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0033_alter_servicocontratado_quantidade_amostras_and_more'),
+        ("simplims_app", "0033_alter_servicocontratado_quantidade_amostras_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='amostra',
-            name='categorias',
-            field=models.ManyToManyField(blank=True, related_name='amostras', to='simplims_app.categoriaparametro', verbose_name='Categorias de Parâmetros'),
+            model_name="amostra",
+            name="categorias",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="amostras",
+                to="simplims_app.categoriaparametro",
+                verbose_name="Categorias de Parâmetros",
+            ),
         ),
         migrations.CreateModel(
-            name='ParametroAmostra',
+            name="ParametroAmostra",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('analisar', models.BooleanField(default=True, verbose_name='Será analisado?')),
-                ('resultado', models.CharField(blank=True, max_length=100, null=True, verbose_name='Resultado')),
-                ('amostra', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='parametros_amostra', to='simplims_app.amostra')),
-                ('parametro', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='simplims_app.parametro')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "analisar",
+                    models.BooleanField(default=True, verbose_name="Será analisado?"),
+                ),
+                (
+                    "resultado",
+                    models.CharField(
+                        blank=True, max_length=100, null=True, verbose_name="Resultado"
+                    ),
+                ),
+                (
+                    "amostra",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="parametros_amostra",
+                        to="simplims_app.amostra",
+                    ),
+                ),
+                (
+                    "parametro",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="simplims_app.parametro",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Parâmetro da Amostra',
-                'verbose_name_plural': 'Parâmetros da Amostra',
-                'unique_together': {('amostra', 'parametro')},
+                "verbose_name": "Parâmetro da Amostra",
+                "verbose_name_plural": "Parâmetros da Amostra",
+                "unique_together": {("amostra", "parametro")},
             },
         ),
     ]

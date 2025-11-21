@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_bootstrap5",
-    #"simplims_app",
+    # "simplims_app",
     "simplims_app.apps.SimplimsAppConfig",
 ]
 

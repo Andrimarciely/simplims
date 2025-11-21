@@ -1,17 +1,17 @@
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from django.shortcuts import render, get_object_or_404
-from django.views import View
 from django.db.models import Q
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from ..forms import OrdemServicoForm
-from ..models import OrdemServico, Amostra, ParametroAmostra, Legislacao
+from ..models import OrdemServico
 from .mixins import DeleteRecordMixin
-
 
 # ============================================================
 #  MIXIN PADRÃO DAS VIEWS DE ORDEM DE SERVIÇO
 # ============================================================
+
 
 class OrdemServicoViewMixin:
     """
@@ -20,15 +20,17 @@ class OrdemServicoViewMixin:
     - define form
     - define URL de sucesso
     """
+
     model = OrdemServico
     form_class = OrdemServicoForm
-    ordering = ['-id']
+    ordering = ["-id"]
     success_url = reverse_lazy("ordem_servico_listar")
 
 
 # ============================================================
 #  CRUD
 # ============================================================
+
 
 class OrdemServicoListView(OrdemServicoViewMixin, ListView):
     template_name = "simplims_app/ordem_servico/lista.html"
@@ -39,12 +41,13 @@ class OrdemServicoListView(OrdemServicoViewMixin, ListView):
         termo = self.request.GET.get("q")
         if termo:
             qs = qs.filter(
-                Q(id__icontains=termo) |
-                Q(empresa__apelido__icontains=termo) |
-                Q(observacoes__icontains=termo)
+                Q(id__icontains=termo)
+                | Q(empresa__apelido__icontains=termo)
+                | Q(observacoes__icontains=termo)
             )
 
         return qs
+
 
 class OrdemServicoCreateView(OrdemServicoViewMixin, CreateView):
     template_name = "simplims_app/ordem_servico/formulario.html"
@@ -62,11 +65,12 @@ class OrdemServicoDeleteView(OrdemServicoViewMixin, DeleteRecordMixin, DeleteVie
 #  MIXIN DE ANÁLISE CONSOLIDADA DA ORDEM DE SERVIÇO
 # ============================================================
 
+
 class OrdemServicoAnaliseMixin:
     template_name = "simplims_app/ordem_servico/analise.html"
 
     def montar_analise(self, ordem_servico):
-        from simplims_app.models import ParametroAmostra, Legislacao, Amostra
+        from simplims_app.models import Amostra, Legislacao, ParametroAmostra
 
         amostras = Amostra.objects.filter(
             servico_contratado__ordem_servico=ordem_servico
@@ -75,11 +79,9 @@ class OrdemServicoAnaliseMixin:
         analise_os = []
 
         for amostra in amostras:
-            parametros_amostra = (
-                ParametroAmostra.objects
-                .filter(amostra=amostra)
-                .select_related("parametro", "parametro__categoria_parametro")
-            )
+            parametros_amostra = ParametroAmostra.objects.filter(
+                amostra=amostra
+            ).select_related("parametro", "parametro__categoria_parametro")
 
             linhas = []
 
@@ -92,23 +94,31 @@ class OrdemServicoAnaliseMixin:
                 elif legislacao and legislacao.valor_maximo is not None:
                     try:
                         valor = float(pa.resultado)
-                        status = "conforme" if valor <= legislacao.valor_maximo else "nao_conforme"
+                        status = (
+                            "conforme"
+                            if valor <= legislacao.valor_maximo
+                            else "nao_conforme"
+                        )
                     except:
                         status = "erro"
 
                 else:
                     status = "sem_limite"
 
-                linhas.append({
-                    "pa": pa,
-                    "legislacao": legislacao,
-                    "status": status,
-                })
+                linhas.append(
+                    {
+                        "pa": pa,
+                        "legislacao": legislacao,
+                        "status": status,
+                    }
+                )
 
-            analise_os.append({
-                "amostra": amostra,
-                "linhas": linhas,
-            })
+            analise_os.append(
+                {
+                    "amostra": amostra,
+                    "linhas": linhas,
+                }
+            )
 
         return analise_os
 
@@ -116,6 +126,7 @@ class OrdemServicoAnaliseMixin:
 # ============================================================
 #  VIEW DE ANÁLISE DA ORDEM DE SERVIÇO (oficial)
 # ============================================================
+
 
 class OrdemServicoAnaliseView(OrdemServicoAnaliseMixin, View):
     """
@@ -128,7 +139,11 @@ class OrdemServicoAnaliseView(OrdemServicoAnaliseMixin, View):
 
         analise_os = self.montar_analise(os)
 
-        return render(request, self.template_name, {
-            "os": os,
-            "analise_os": analise_os,
-        })
+        return render(
+            request,
+            self.template_name,
+            {
+                "os": os,
+                "analise_os": analise_os,
+            },
+        )

@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0030_remove_ordemservico_resultados_servicos_and_more'),
+        ("simplims_app", "0030_remove_ordemservico_resultados_servicos_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='amostra',
-            name='numero_ssl',
+            model_name="amostra",
+            name="numero_ssl",
         ),
         migrations.RemoveField(
-            model_name='amostra',
-            name='ordem_servico',
+            model_name="amostra",
+            name="ordem_servico",
         ),
         migrations.AlterField(
-            model_name='servicocontratado',
-            name='quantidade_amostras',
+            model_name="servicocontratado",
+            name="quantidade_amostras",
             field=models.PositiveIntegerField(default=1),
         ),
     ]

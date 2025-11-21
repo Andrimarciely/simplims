@@ -7,14 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0026_amostra'),
+        ("simplims_app", "0026_amostra"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='amostra',
-            name='ordem_servico',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='amostras', to='simplims_app.ordemservico'),
+            model_name="amostra",
+            name="ordem_servico",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="amostras",
+                to="simplims_app.ordemservico",
+            ),
             preserve_default=False,
         ),
     ]

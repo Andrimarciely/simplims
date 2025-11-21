@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
 from ..forms import AmostraForm
 from ..models import Amostra
 from .mixins import DeleteRecordMixin
@@ -9,9 +10,10 @@ class AmostraViewMixin:
     """
     Mixin para views de Amostra: define model, form e URL de sucesso.
     """
+
     model = Amostra
     form_class = AmostraForm
-    ordering = ['-id']
+    ordering = ["-id"]
     success_url = reverse_lazy("amostra_listar")
 
 
@@ -53,10 +55,7 @@ class AmostraCreateView(AmostraViewMixin, CreateView):
         ).distinct()
 
         for p in parametros:
-            ParametroAmostra.objects.get_or_create(
-                amostra=self.object,
-                parametro=p
-            )
+            ParametroAmostra.objects.get_or_create(amostra=self.object, parametro=p)
         # ---- AQUI TERMINA A PARTE NOVA ----
 
         return response
@@ -66,13 +65,9 @@ class AmostraCreateView(AmostraViewMixin, CreateView):
         return reverse_lazy("amostra_criar") + f"?servico_contratado={servico_id}"
 
 
-
-
 class AmostraUpdateView(AmostraViewMixin, UpdateView):
     template_name = "simplims_app/amostra/formulario.html"
 
 
-
 class AmostraDeleteView(AmostraViewMixin, DeleteRecordMixin, DeleteView):
     template_name = "simplims_app/amostra/confirmar_exclusao.html"
-

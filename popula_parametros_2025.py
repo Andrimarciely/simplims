@@ -1,18 +1,49 @@
 import random
-from simplims_app.models import Amostra, Parametro, ParametroAmostra, Legislacao
 
-param_ids = [21,22,1,2,6,25,35,36,37,38,39,40,41,42,43,45,46,47,48,49,50,52,53,54]
+from simplims_app.models import Amostra, Legislacao, Parametro, ParametroAmostra
 
-leg_map = {l.parametro_id: l.valor_maximo for l in Legislacao.objects.filter(parametro_id__in=param_ids)}
+param_ids = [
+    21,
+    22,
+    1,
+    2,
+    6,
+    25,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    52,
+    53,
+    54,
+]
+
+leg_map = {
+    l.parametro_id: l.valor_maximo
+    for l in Legislacao.objects.filter(parametro_id__in=param_ids)
+}
 params = {p.id: p for p in Parametro.objects.filter(id__in=param_ids)}
 
-amostras = Amostra.objects.filter(id__in=[40001,40002,40003,40004,40005,40006,40007,40008])
+amostras = Amostra.objects.filter(
+    id__in=[40001, 40002, 40003, 40004, 40005, 40006, 40007, 40008]
+)
 
 count = 0
 
 for am in amostras:
     mes = am.data_coleta.month
-    jus = (am.tipo_ponto == "JUSANTE")
+    jus = am.tipo_ponto == "JUSANTE"
     saz = 0.9 + 0.02 * mes
 
     for pid in param_ids:

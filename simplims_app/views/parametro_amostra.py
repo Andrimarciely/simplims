@@ -27,21 +27,23 @@ class ParametroAmostraListUpdateView(ParametroAmostraViewMixin, View):
     def get(self, request, pk):
         amostra = self.get_amostra()
 
-        parametros = ParametroAmostra.objects.filter(
-            amostra=amostra
-        ).select_related("parametro")
+        parametros = ParametroAmostra.objects.filter(amostra=amostra).select_related(
+            "parametro"
+        )
 
-        return render(request, self.template_name, {
-            "amostra": amostra,
-            "parametros": parametros,
-        })
+        return render(
+            request,
+            self.template_name,
+            {
+                "amostra": amostra,
+                "parametros": parametros,
+            },
+        )
 
     def post(self, request, pk):
         amostra = get_object_or_404(Amostra, pk=pk)
 
-        parametros = ParametroAmostra.objects.filter(
-            amostra=amostra
-        )
+        parametros = ParametroAmostra.objects.filter(amostra=amostra)
 
         for pa in parametros:
             pa.analisar = f"analisar_{pa.id}" in request.POST
@@ -49,4 +51,3 @@ class ParametroAmostraListUpdateView(ParametroAmostraViewMixin, View):
             pa.save()
 
         return redirect("amostra_listar")
-

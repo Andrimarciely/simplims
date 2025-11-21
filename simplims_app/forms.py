@@ -1,17 +1,17 @@
 from django import forms
+
 from .models import (
+    Amostra,
+    CategoriaParametro,
     Empresa,
+    Legislacao,
     Matriz,
     OrdemServico,
-    CategoriaParametro,
-    TipoParametro,
     Parametro,
     Servico,
-    Legislacao,
-    VisitaTecnica,
-    Amostra,
     ServicoContratado,
-    ParametroAmostra
+    TipoParametro,
+    VisitaTecnica,
 )
 
 
@@ -105,7 +105,7 @@ class OrdemServicoForm(forms.ModelForm):
         model = OrdemServico
         fields = [
             "empresa",
-        #    "servicos",
+            #    "servicos",
             "observacoes",
         ]
 
@@ -167,6 +167,7 @@ def customize_ordem_servico_resultado_form(
     ref. https://jacobian.org/2010/feb/28/dynamic-form-generation/
     """
 
+
 class OrdemServicoResultadosForm(forms.ModelForm):
 
     class Meta:
@@ -176,7 +177,6 @@ class OrdemServicoResultadosForm(forms.ModelForm):
     def __init__(self, *args, dynamic_fields=None, **kwargs):
         super().__init__(*args, **kwargs)
 
-
         if dynamic_fields:
             for item in dynamic_fields:
                 field = item["field"]
@@ -184,9 +184,7 @@ class OrdemServicoResultadosForm(forms.ModelForm):
                 initial = item.get("initial")
 
                 self.fields[field] = CustomCharField(
-                    label=label,
-                    initial=initial,
-                    required=False
+                    label=label, initial=initial, required=False
                 )
 
 
@@ -194,7 +192,7 @@ class AmostraForm(forms.ModelForm):
     class Meta:
         model = Amostra
         fields = [
-            'servico_contratado',
+            "servico_contratado",
             "data_coleta",
             "hora_coleta",
             "tipo_ponto",
@@ -220,8 +218,7 @@ class GraficoFiltroForm(forms.Form):
     ano = forms.ChoiceField(label="Ano")
     local = forms.ChoiceField(label="Local")
     parametro = forms.ModelChoiceField(
-        queryset=Parametro.objects.all(),
-        label="Parâmetro"
+        queryset=Parametro.objects.all(), label="Parâmetro"
     )
 
     def __init__(self, *args, **kwargs):
@@ -236,8 +233,5 @@ class GraficoFiltroForm(forms.Form):
         self.fields["ano"].choices = [(a, a) for a in anos]
 
         # Locais distintos vindos do ServicoContratado
-        locais = (
-            ServicoContratado.objects.values_list("local", flat=True)
-            .distinct()
-        )
+        locais = ServicoContratado.objects.values_list("local", flat=True).distinct()
         self.fields["local"].choices = [(l, l) for l in locais]

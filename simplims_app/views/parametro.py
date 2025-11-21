@@ -2,9 +2,10 @@
 Tudo o que é relativo às views de Parametro ficam aqui
 """
 
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from django.db.models import Q
+
 from ..forms import ParametroForm
 from ..models import Parametro
 from .mixins import DeleteRecordMixin

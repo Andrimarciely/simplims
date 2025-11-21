@@ -7,13 +7,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0031_remove_amostra_numero_ssl_and_more'),
+        ("simplims_app", "0031_remove_amostra_numero_ssl_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='amostra',
-            name='servico_contratado',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='simplims_app.servicocontratado'),
+            model_name="amostra",
+            name="servico_contratado",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="simplims_app.servicocontratado",
+            ),
         ),
     ]

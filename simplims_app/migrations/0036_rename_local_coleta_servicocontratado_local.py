@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0035_remove_amostra_local_coleta_and_more'),
+        ("simplims_app", "0035_remove_amostra_local_coleta_and_more"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='servicocontratado',
-            old_name='local_coleta',
-            new_name='local',
+            model_name="servicocontratado",
+            old_name="local_coleta",
+            new_name="local",
         ),
     ]

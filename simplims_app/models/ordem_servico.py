@@ -1,6 +1,6 @@
 from django.db import models
-from .empresa import Empresa
 
+from .empresa import Empresa
 
 
 class OrdemServico(models.Model):
@@ -9,11 +9,10 @@ class OrdemServico(models.Model):
         Empresa, on_delete=models.CASCADE, verbose_name="Empresa Cliente"
     )
     observacoes = models.TextField(blank=True, null=True, verbose_name="Observações")
-    ordering = ['-data_emissao', '-id']
+    ordering = ["-data_emissao", "-id"]
 
     def __str__(self) -> str:
         return f"OS {self.id} - {self.empresa}"
-
 
     class Meta:
         verbose_name = "Ordem de Serviço"

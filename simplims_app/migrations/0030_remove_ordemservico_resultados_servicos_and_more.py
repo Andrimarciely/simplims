@@ -7,26 +7,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0029_remove_amostra_servico_amostra_servico_contratado'),
+        ("simplims_app", "0029_remove_amostra_servico_amostra_servico_contratado"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='ordemservico',
-            name='resultados_servicos',
+            model_name="ordemservico",
+            name="resultados_servicos",
         ),
         migrations.RemoveField(
-            model_name='ordemservico',
-            name='servicos',
+            model_name="ordemservico",
+            name="servicos",
         ),
         migrations.AlterField(
-            model_name='servicocontratado',
-            name='ordem_servico',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='simplims_app.ordemservico'),
+            model_name="servicocontratado",
+            name="ordem_servico",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="simplims_app.ordemservico",
+            ),
         ),
         migrations.AlterField(
-            model_name='servicocontratado',
-            name='servico',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='simplims_app.servico'),
+            model_name="servicocontratado",
+            name="servico",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="simplims_app.servico"
+            ),
         ),
     ]

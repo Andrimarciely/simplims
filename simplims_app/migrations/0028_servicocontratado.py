@@ -7,17 +7,39 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0027_amostra_ordem_servico'),
+        ("simplims_app", "0027_amostra_ordem_servico"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ServicoContratado',
+            name="ServicoContratado",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantidade_amostras', models.PositiveIntegerField(default=0)),
-                ('ordem_servico', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='servicos_contratados', to='simplims_app.ordemservico')),
-                ('servico', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='servicos_contratados', to='simplims_app.servico')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("quantidade_amostras", models.PositiveIntegerField(default=0)),
+                (
+                    "ordem_servico",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="servicos_contratados",
+                        to="simplims_app.ordemservico",
+                    ),
+                ),
+                (
+                    "servico",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="servicos_contratados",
+                        to="simplims_app.servico",
+                    ),
+                ),
             ],
         ),
     ]

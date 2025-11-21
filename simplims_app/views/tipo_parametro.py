@@ -4,7 +4,6 @@ Tudo o que é relativo às views de Tipo de Parametro ficam aqui
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from django.shortcuts import render
 
 from ..forms import TipoParametroForm
 from ..models import TipoParametro

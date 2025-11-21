@@ -1,90 +1,19 @@
 import locale
-from datetime import date, datetime, timedelta
-from django.shortcuts import render
+from datetime import date
+
 from django.db.models import Count, Q
+from django.shortcuts import render
 
-from ..models.ordem_servico import OrdemServico
-from ..models.visita_tecnica import VisitaTecnica
 from ..models.amostra import Amostra
+from ..models.ordem_servico import OrdemServico
 from ..models.parametro_amostra import ParametroAmostra
+from ..models.visita_tecnica import VisitaTecnica
 
-from .empresa import (
-    EmpresaCreateView,
-    EmpresaDeleteView,
-    EmpresaListView,
-    EmpresaUpdateView,
-)
-from .legislacao import (
-    LegislacaoCreateView,
-    LegislacaoDeleteView,
-    LegislacaoListView,
-    LegislacaoUpdateView,
-)
-from .matriz import MatrizCreateView, MatrizDeleteView, MatrizListView, MatrizUpdateView
-
-from .ordem_servico import (
-    OrdemServicoCreateView,
-    OrdemServicoDeleteView,
-    OrdemServicoListView,
-    OrdemServicoUpdateView,
-    OrdemServicoAnaliseView
-)
-from .categoria_parametro import (
-    CategoriaParametroCreateView,
-    CategoriaParametroDeleteView,
-    CategoriaParametroListView,
-    CategoriaParametroUpdateView,
-)
-from .tipo_parametro import (
-    TipoParametroCreateView,
-    TipoParametroDeleteView,
-    TipoParametroListView,
-    TipoParametroUpdateView,
-)
-from .parametro import (
-    ParametroCreateView,
-    ParametroDeleteView,
-    ParametroListView,
-    ParametroUpdateView,
-)
-from .servico import (
-    ServicoCreateView,
-    ServicoDeleteView,
-    ServicoListView,
-    ServicoUpdateView,
-)
-
-from .visita_tecnica import (
-    VisitaTecnicaCreateView,
-    VisitaTecnicaDeleteView,
-    VisitaTecnicaListView,
-    VisitaTecnicaUpdateView,
-    AgendaDiaView,
-)
-
-from .amostra import (
-    AmostraCreateView,
-    AmostraDeleteView,
-    AmostraListView,
-    AmostraUpdateView,
-)
-
-from .servico_contratado import (
-    ServicoContratadoCreateView,
-    ServicoContratadoDeleteView,
-    ServicoContratadoListView,
-    ServicoContratadoUpdateView,
-)
-
-from.parametro_amostra import (
+from .parametro_amostra import (
     ParametroAmostraViewMixin,
     ParametroAmostraListUpdateView,
-
 )
 
-from .plotar_grafico import plotar_grafico
-
-from .relatorio import OrdemServicoRelatorioPDFView
 
 locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
 
@@ -96,27 +25,23 @@ def home(request):
 
     # Cards
     total_os_mes = OrdemServico.objects.filter(
-        data_emissao__year=ano,
-        data_emissao__month=mes
+        data_emissao__year=ano, data_emissao__month=mes
     ).count()
 
     visitas_pendentes = VisitaTecnica.objects.filter(
-        status="PENDENTE",
-        data_visita__gte=hoje
+        status="PENDENTE", data_visita__gte=hoje
     ).count()
 
-    amostras_hoje = Amostra.objects.filter(
-        data_coleta=hoje
-    ).count()
+    amostras_hoje = Amostra.objects.filter(data_coleta=hoje).count()
 
     pendentes_analise = ParametroAmostra.objects.filter(
         Q(resultado__isnull=True) | Q(resultado="")
     ).count()
 
     # Próximas visitas
-    proximas_visitas = VisitaTecnica.objects.filter(
-        data_visita__gte=hoje
-    ).order_by("data_visita", "hora_visita")[:5]
+    proximas_visitas = VisitaTecnica.objects.filter(data_visita__gte=hoje).order_by(
+        "data_visita", "hora_visita"
+    )[:5]
 
     # Gráfico: amostras por mês
     amostras_por_mes = (
@@ -128,7 +53,14 @@ def home(request):
 
     labels = list(range(1, 13))
     valores = [
-        next((item["total"] for item in amostras_por_mes if item["data_coleta__month"] == mes), 0)
+        next(
+            (
+                item["total"]
+                for item in amostras_por_mes
+                if item["data_coleta__month"] == mes
+            ),
+            0,
+        )
         for mes in labels
     ]
 

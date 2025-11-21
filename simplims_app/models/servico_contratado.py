@@ -1,6 +1,8 @@
 from django.db import models
+
 from .ordem_servico import OrdemServico
 from .servico import Servico
+
 
 class ServicoContratado(models.Model):
     ordem_servico = models.ForeignKey(
@@ -12,9 +14,8 @@ class ServicoContratado(models.Model):
         on_delete=models.CASCADE,
     )
 
-    local= models.CharField(
-        max_length=255,
-        verbose_name="Local de coleta (rio, igarapé, etc.)"
+    local = models.CharField(
+        max_length=255, verbose_name="Local de coleta (rio, igarapé, etc.)"
     )
 
     def __str__(self):

@@ -6,9 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from ..forms import ServicoContratadoForm
-from ..forms import ServicoForm
 from ..models import ServicoContratado
-from ..models import Servico
 from .mixins import DeleteRecordMixin
 
 
@@ -16,10 +14,11 @@ class ServicoContratadoViewMixin:
     """
     Define o comportamento comum das views de ServicoContratado.
     """
+
     model = ServicoContratado
     form_class = ServicoContratadoForm
     success_url = reverse_lazy("servico_contratado_listar")
-    ordering = ['-id']
+    ordering = ["-id"]
 
     def get_ordem_servico_id(self):
         """
@@ -55,5 +54,7 @@ class ServicoContratadoUpdateView(ServicoContratadoViewMixin, UpdateView):
     template_name = "simplims_app/servico_contratado/formulario.html"
 
 
-class ServicoContratadoDeleteView(ServicoContratadoViewMixin, DeleteRecordMixin, DeleteView):
+class ServicoContratadoDeleteView(
+    ServicoContratadoViewMixin, DeleteRecordMixin, DeleteView
+):
     template_name = "simplims_app/servico_contratado/confirmar_exclusao.html"

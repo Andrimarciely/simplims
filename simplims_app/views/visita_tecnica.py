@@ -2,16 +2,16 @@
 Tudo o que é relativo às views de VisitaTecnica ficam aqui
 """
 
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from datetime import date, timedelta
-from django.utils import timezone
+from datetime import timedelta
+
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from ..forms import VisitaTecnicaForm
 from ..models import VisitaTecnica
 from .mixins import DeleteRecordMixin
-from ..models import VisitaTecnica
 
 
 class AgendaDiaView(ListView):

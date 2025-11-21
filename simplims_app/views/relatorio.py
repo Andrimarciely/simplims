@@ -1,11 +1,11 @@
-from django.views import View
+import os as system_os
+
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
+from django.views import View
 from weasyprint import HTML
-
-from django.conf import settings
-import os as system_os
 
 from ..models.ordem_servico import OrdemServico
 from .ordem_servico import OrdemServicoAnaliseMixin
@@ -27,7 +27,7 @@ class OrdemServicoRelatorioPDFView(OrdemServicoAnaliseMixin, View):
                 "os": os_obj,
                 "analise_os": analise_os,
                 "logo_path": logo_path,
-            }
+            },
         )
 
         pdf = HTML(string=html).write_pdf()

@@ -6,28 +6,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0034_amostra_categorias_parametroamostra'),
+        ("simplims_app", "0034_amostra_categorias_parametroamostra"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='amostra',
-            name='local_coleta',
+            model_name="amostra",
+            name="local_coleta",
         ),
         migrations.RemoveField(
-            model_name='servicocontratado',
-            name='quantidade_amostras',
+            model_name="servicocontratado",
+            name="quantidade_amostras",
         ),
         migrations.AddField(
-            model_name='amostra',
-            name='tipo_ponto',
-            field=models.CharField(choices=[('MONTANTE', 'Montante'), ('JUSANTE', 'Jusante'), ('NA', 'Não se aplica')], default='NA', max_length=10, verbose_name='Ponto (Montante/Jusante/Não se aplica)'),
+            model_name="amostra",
+            name="tipo_ponto",
+            field=models.CharField(
+                choices=[
+                    ("MONTANTE", "Montante"),
+                    ("JUSANTE", "Jusante"),
+                    ("NA", "Não se aplica"),
+                ],
+                default="NA",
+                max_length=10,
+                verbose_name="Ponto (Montante/Jusante/Não se aplica)",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='servicocontratado',
-            name='local_coleta',
-            field=models.CharField(default='Não informado', max_length=255, verbose_name='Local de coleta (rio, igarapé, etc.)'),
+            model_name="servicocontratado",
+            name="local_coleta",
+            field=models.CharField(
+                default="Não informado",
+                max_length=255,
+                verbose_name="Local de coleta (rio, igarapé, etc.)",
+            ),
             preserve_default=False,
         ),
     ]

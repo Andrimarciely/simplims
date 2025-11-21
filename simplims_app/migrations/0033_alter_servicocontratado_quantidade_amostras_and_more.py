@@ -7,18 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('simplims_app', '0032_alter_amostra_servico_contratado'),
+        ("simplims_app", "0032_alter_amostra_servico_contratado"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='servicocontratado',
-            name='quantidade_amostras',
+            model_name="servicocontratado",
+            name="quantidade_amostras",
             field=models.PositiveIntegerField(default=2),
         ),
         migrations.AlterField(
-            model_name='visitatecnica',
-            name='ordem_servico',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='simplims_app.ordemservico'),
+            model_name="visitatecnica",
+            name="ordem_servico",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="simplims_app.ordemservico",
+            ),
         ),
     ]

@@ -1,18 +1,18 @@
 from django.contrib import admin
 
 from simplims_app.models import (
+    Amostra,
+    CategoriaParametro,
     Empresa,
     Legislacao,
     Matriz,
     OrdemServico,
-    CategoriaParametro,
-    TipoParametro,
     Parametro,
+    ParametroAmostra,
     Servico,
-    VisitaTecnica,
-    Amostra,
     ServicoContratado,
-    ParametroAmostra
+    TipoParametro,
+    VisitaTecnica,
 )
 
 # Register your models here.

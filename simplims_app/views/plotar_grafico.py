@@ -1,10 +1,11 @@
-import io
 import base64
-import matplotlib.pyplot as plt
+import io
 
+import matplotlib.pyplot as plt
 from django.shortcuts import render
+
 from ..forms import GraficoFiltroForm
-from ..models import Amostra, ParametroAmostra, Legislacao
+from ..models import Amostra, Legislacao, ParametroAmostra
 
 
 def plotar_grafico(request):
@@ -21,20 +22,15 @@ def plotar_grafico(request):
         valor_legislacao = legislacao.valor_maximo if legislacao else None
 
         # Filtra amostras do ano e local
-        amostras = (
-            Amostra.objects.filter(
-                data_coleta__year=ano,
-                servico_contratado__local=local
-            )
-            .order_by("data_coleta")
-        )
+        amostras = Amostra.objects.filter(
+            data_coleta__year=ano, servico_contratado__local=local
+        ).order_by("data_coleta")
 
         # ---------- COLETAR MONTANTE ----------
         amostras_montante = amostras.filter(tipo_ponto="MONTANTE")
         resultados_montante = (
             ParametroAmostra.objects.filter(
-                amostra__in=amostras_montante,
-                parametro=parametro
+                amostra__in=amostras_montante, parametro=parametro
             )
             .select_related("amostra")
             .order_by("amostra__data_coleta")
@@ -56,8 +52,7 @@ def plotar_grafico(request):
         amostras_jusante = amostras.filter(tipo_ponto="JUSANTE")
         resultados_jusante = (
             ParametroAmostra.objects.filter(
-                amostra__in=amostras_jusante,
-                parametro=parametro
+                amostra__in=amostras_jusante, parametro=parametro
             )
             .select_related("amostra")
             .order_by("amostra__data_coleta")
@@ -90,7 +85,11 @@ def plotar_grafico(request):
 
             # Legislação (reta horizontal)
             if valor_legislacao:
-                ax.axhline(y=valor_legislacao, linestyle='--', label=f"Legislação ({valor_legislacao})")
+                ax.axhline(
+                    y=valor_legislacao,
+                    linestyle="--",
+                    label=f"Legislação ({valor_legislacao})",
+                )
 
             ax.set_title(f"{parametro.descricao} – {local} ({ano})")
             ax.set_xlabel("Data da coleta")
