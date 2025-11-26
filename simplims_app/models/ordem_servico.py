@@ -9,7 +9,7 @@ class OrdemServico(models.Model):
         Empresa, on_delete=models.CASCADE, verbose_name="Empresa Cliente"
     )
     observacoes = models.TextField(blank=True, null=True, verbose_name="Observações")
-    ordering = ['-data_emissao', '-id']
+
 
     def __str__(self) -> str:
         return f"OS {self.id} - {self.empresa}"
@@ -18,3 +18,4 @@ class OrdemServico(models.Model):
     class Meta:
         verbose_name = "Ordem de Serviço"
         verbose_name_plural = "Ordens de Serviço"
+        ordering = ['-data_emissao', '-id']
