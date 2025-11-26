@@ -1,4 +1,4 @@
-# seu_app/tests/test_model_empresa.py
+# simplims_app/tests/test_model_empresa.py
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
