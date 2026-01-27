@@ -1,9 +1,9 @@
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from ..forms import AmostraForm
 from ..models import Amostra
 from .mixins import DeleteRecordMixin
-
 
 class AmostraViewMixin:
     """
@@ -57,8 +57,8 @@ class AmostraCreateView(AmostraViewMixin, CreateView):
                 amostra=self.object,
                 parametro=p
             )
-        # ---- AQUI TERMINA A PARTE NOVA ----
 
+        messages.success(self.request, "A amostra foi cadastrada com sucesso!")
         return response
 
     def get_success_url(self):

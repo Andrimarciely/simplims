@@ -229,9 +229,11 @@ class GraficoFiltroForm(forms.Form):
 
         # Anos disponíveis (pelas datas de coleta)
         anos = (
-            Amostra.objects.order_by("data_coleta")
+            Amostra.objects
+            .order_by()
             .values_list("data_coleta__year", flat=True)
             .distinct()
+            .order_by("data_coleta__year")
         )
         self.fields["ano"].choices = [(a, a) for a in anos]
 
