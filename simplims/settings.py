@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "simplims_app.apps.SimplimsAppConfig",
 ]
 
+AUTH_USER_MODEL = "simplims_app.User"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
